@@ -53,12 +53,6 @@
     sudo chown -fR $(whoami):$(whoami) hello-meetup/
     ```
 
-- [OPTIONAL] exporting variables to $PATH in container:
-    ```bash
-    export PATH=$PATH:$ANDROID_HOME/tools
-    export PATH=$PATH:$ANDROID_HOME/tools/bin
-    export PATH=$PATH:$ANDROID_HOME/platform-tools
-    ```
 
 - export / build APK
     ```bash
