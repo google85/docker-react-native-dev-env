@@ -66,10 +66,29 @@ RUN echo yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_H
 
 ENV PATH ${SDK_HOME}/bin:$PATH
 
+# adding to PATH
+ENV PATH ${ANDROID_HOME}/tools:$PATH
+ENV PATH ${ANDROID_HOME}/tools/bin:$PATH
+ENV PATH ${ANDROID_HOME}/platform-tools:$PATH
+
+# [OPTIONAL] sudo & user permissions
+RUN apt-get -y install sudo
+
+# [OPTIONAL] making node a root user
+RUN usermod -aG sudo node
 
 # project
 RUN mkdir -p /app/react-native-src
+
+# permissions for running under 'node' user
+RUN chown node /app/react-native-src
+RUN chgrp node /app/react-native-src
+
+# runing under 'node' user
+USER node
 WORKDIR /app/react-native-src
+
+RUN echo "Please attach to this container (docker exec -it ... bash) and create a react-native project like in README.md file."
 
 # to always be started
 CMD sleep infinity

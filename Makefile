@@ -24,6 +24,6 @@ clean: ## CLean out unused docker & docker-compose files
 		@echo "Removing all cached steps... [safe]"
 		docker builder prune
 
-		@echo "Removing unused docker files..."
+		@echo "Removing unused docker files... [danger]"
 		@echo "Please uncomment the next line here in Makefile!"
 #		docker system prune -af

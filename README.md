@@ -1,7 +1,8 @@
-## my Docker React-Native dev environment
-### - from scratch
-### - based on this foreigner YouTube clip: https://www.youtube.com/watch?v=9ygH_lYnpbg
-### - https://reactnative.dev/docs/environment-setup
+## Docker React-Native dev environment
+#### - from scratch
+#### - image size: 3,77 GB
+
+#
 
 ### Reqs:
 - Node - v14 or later   Dockerfile FROM node:16                   ==> Node    v16.18.1
@@ -50,6 +51,13 @@
 - [OPTIONAL] chown to our WSL user of project files so we can change them in VSCode
     ```bash
     sudo chown -fR $(whoami):$(whoami) hello-meetup/
+    ```
+
+- [OPTIONAL] exporting variables to $PATH in container:
+    ```bash
+    export PATH=$PATH:$ANDROID_HOME/tools
+    export PATH=$PATH:$ANDROID_HOME/tools/bin
+    export PATH=$PATH:$ANDROID_HOME/platform-tools
     ```
 
 - export / build APK
