@@ -7,8 +7,9 @@ RUN npm install -g exp
 # update & upgrade
 RUN apt-get update && apt-get upgrade
 
-# JDK
-RUN apt-get -y install default-jre
+# JDK - as we need jlink for gradle build APK, default-jre is not an acceptable version
+RUN apt-get -y install openjdk-11-jdk
+#RUN apt-get -y install default-jre
 # other versions:
 # RUN apt-get -y install openjdk-11-jre-headless
 # RUN apt-get -yinstall openjdk-8-jre-headless
@@ -77,12 +78,21 @@ RUN apt-get -y install sudo
 # [OPTIONAL] making node a root user
 RUN usermod -aG sudo node
 
+# [OPTIONAL] set password for user node
+RUN echo "node:password" | chpasswd
+#RUN passwd node
+
 # project
 RUN mkdir -p /app/react-native-src
 
 # permissions for running under 'node' user
 RUN chown node /app/react-native-src
 RUN chgrp node /app/react-native-src
+
+# optional, for runing under 'node' user ./gradlew commands
+# [it takes a lot, over 100 sec]
+#RUN chown -R node /opt/android-sdk-linux
+#RUN chgrp -R node /opt/android-sdk-linux
 
 # runing under 'node' user
 USER node

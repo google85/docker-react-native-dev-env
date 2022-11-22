@@ -5,9 +5,10 @@
 #
 
 ### Reqs:
-- Node - v14 or later   Dockerfile FROM node:16                   ==> Node    v16.18.1
-- Java - OpenJDK        Dockerfile apt-get -y install default-jre ==> OpenJDK v11.0.16 2022-07-19
-- Gradle                Dockerfile intentionat 6.5                ==> Gradle  v6.5
+- Node - v14 or later   Dockerfile FROM node:16                 ==> Node    v16.18.1
+- Java - OpenJDK        Dockerfile apt-get...                   ==> OpenJDK v11.0.16 2022-07-19
+       -  as we need `jlink` for gradle build APK, default-jre is not an acceptable version
+- Gradle                Dockerfile intentionat 6.5              ==> Gradle  v6.5
 - Gradle from project   - v7.5.1
 - android SDK,build-tools
 
@@ -53,11 +54,25 @@
     sudo chown -fR $(whoami):$(whoami) hello-meetup/
     ```
 
+- [TODO] pt moment mai sunt necesare urmatoarele editari in proiect:
+    - SDK dir not being recognized (maybe because was runned without root?)
+    ```bash
+    echo 'sdk.dir=/opt/android-sdk-linux' > /android/local.properties
+    ```
+    - sdk version not accepted as variable [maybe because was runned without root?]
+    in `android/app/build.gradle`
+    ```gradle
+     android {
+    ndkVersion rootProject.ext.ndkVersion
 
-- export / build APK
+    #compileSdkVersion rootProject.ext.compileSdkVersion    ==> compileSdkVersion 31
+    ```
+
+
+- export / build APK [password for user 'node' is 'password']
     ```bash
     cd /android
-    ./gradlew assembleDebug
+    sudo ./gradlew assembleDebug
     ```
 
 
