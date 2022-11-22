@@ -70,12 +70,22 @@
     #compileSdkVersion rootProject.ext.compileSdkVersion    ==> compileSdkVersion 31
     ```
 
+- [OPTIONAL] syncronizing after editing in `/app.json` the version, versionCode, package name with exporting in sync to `/android/app/build.gradle`:
+    ```bash
+    npx expo prebuild
+    ```
+#
 
-- export / build APK [password for user 'node' is 'password']
+- [_BUILD_APK_] export / build APK [password for user 'node' is 'password']
     ```bash
     cd /android
     sudo ./gradlew assembleDebug
     ```
+    , or (adding runing on android as well):
+    ```bash
+    sudo react-native run-android
+    ```
+
 
 
 
