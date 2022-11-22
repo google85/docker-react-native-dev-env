@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  react-native:
+    #stdin_open: true
+    #tty: true
+    container_name: myreactnative-dev
+    build: .
+    volumes:
+      - ./react-native-src:/app/react-native-src
+    ports:
+      - 19000:19000
+      - 19001:19001
+      - 19006:19006
+      - 8081:8081
+    #env_file:
+    #  - ./.env
