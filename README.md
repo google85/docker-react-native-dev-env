@@ -54,11 +54,13 @@
     sudo chown -fR $(whoami):$(whoami) hello-meetup/
     ```
 
-- [TODO] pt moment mai sunt necesare urmatoarele editari in proiect:
+- [TODO] required edits in project:
     - SDK dir not being recognized (maybe because was runned without root?)
     ```bash
-    echo 'sdk.dir=/opt/android-sdk-linux' > /android/local.properties
+    echo 'sdk.dir=/opt/android-sdk-linux' > ./android/local.properties
     ```
+
+    [THIS ONE IS NOT NEEDED IF WE FOLLOW PREVIOUS STEP]
     - sdk version not accepted as variable [maybe because was runned without root?]
     in `android/app/build.gradle`
     ```gradle
