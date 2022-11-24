@@ -1,5 +1,9 @@
 FROM node:16 as build
 
+ARG USER
+ARG USER_ID
+ARG GROUP_ID
+
 RUN npm install -g react-native-cli
 RUN npm install -g create-react-native-app
 RUN npm install -g exp
@@ -78,16 +82,29 @@ RUN apt-get -y install sudo
 # [OPTIONAL] making node a root user
 RUN usermod -aG sudo node
 
-# [OPTIONAL] set password for user node
+# [OPTIONAL] set password for user node [non-interactive]
 RUN echo "node:password" | chpasswd
 #RUN passwd node
 
 # project
 RUN mkdir -p /app/react-native-src
 
+# [added] fix permissions for WSL user access (& implicit node?!) to .npm & others
+RUN chown -R $USER_ID:$GROUP_ID "/root/.npm"
+# [>230 sec]
+RUN chown -R $USER_ID:$GROUP_ID "/usr/local/lib/node_modules"
+#RUN chown -R node:node "/usr/local/lib/node_modules"
+# [>370 sec]
+RUN chown -R $USER_ID:$GROUP_ID /opt/android-sdk-linux
+RUN chown -R $USER_ID:$GROUP_ID /app/react-native-src
+
+# make ANDROID_HOME symlink
+RUN mkdir -p /root/Android
+RUN ln -s /opt/android-sdk-linux /root/Android/sdk
+
 # permissions for running under 'node' user
-RUN chown node /app/react-native-src
-RUN chgrp node /app/react-native-src
+#RUN chown node /app/react-native-src
+#RUN chgrp node /app/react-native-src
 
 # optional, for runing under 'node' user ./gradlew commands
 # [it takes a lot, over 100 sec]
@@ -98,6 +115,7 @@ RUN chgrp node /app/react-native-src
 USER node
 WORKDIR /app/react-native-src
 
+EXPOSE 19006
 RUN echo "Please attach to this container (docker exec -it ... bash) and create a react-native project like in README.md file."
 
 # to always be started

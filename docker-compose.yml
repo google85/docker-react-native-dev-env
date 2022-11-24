@@ -5,7 +5,13 @@ services:
     #stdin_open: true
     #tty: true
     container_name: myreactnative-dev
-    build: .
+    build:
+      context: "."
+      dockerfile: Dockerfile
+      args:
+        USER: '${USER:-whoami}'
+        USER_ID: '${USER_ID:-1000}'
+        GROUP_ID: '${GROUP_ID:-1000}'
     volumes:
       - ./react-native-src:/app/react-native-src
     ports:
