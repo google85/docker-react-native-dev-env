@@ -79,7 +79,7 @@
 - [_BUILD_APK_] export / build APK [password for user 'node' is 'password']
     ```bash
     cd /android
-    sudo ./gradlew assembleDebug
+    sudo ./gradlew assembleRelease
     ```
     , or (adding runing on android as well):
     ```bash
