@@ -90,13 +90,19 @@ RUN echo "node:password" | chpasswd
 RUN mkdir -p /app/react-native-src
 
 # [added] fix permissions for WSL user access (& implicit node?!) to .npm & others
+# npm
 RUN chown -R $USER_ID:$GROUP_ID "/root/.npm"
-# [>230 sec]
+RUN chown -R $USER_ID:$GROUP_ID "/root/.config"
+
+# global node_modules [>230 sec]
 RUN chown -R $USER_ID:$GROUP_ID "/usr/local/lib/node_modules"
 #RUN chown -R node:node "/usr/local/lib/node_modules"
 # [>370 sec]
 RUN chown -R $USER_ID:$GROUP_ID /opt/android-sdk-linux
 RUN chown -R $USER_ID:$GROUP_ID /app/react-native-src
+
+# metro for building stage on opening via Expo mobile app
+RUN chown -R $USER_ID:$GROUP_ID "/tmp/metrocache"
 
 # make ANDROID_HOME symlink
 RUN mkdir -p /root/Android
@@ -115,6 +121,9 @@ RUN ln -s /opt/android-sdk-linux /root/Android/sdk
 USER node
 WORKDIR /app/react-native-src
 
+EXPOSE 19000
+EXPOSE 19001
+EXPOSE 19002
 EXPOSE 19006
 RUN echo "Please attach to this container (docker exec -it ... bash) and create a react-native project like in README.md file."
 
