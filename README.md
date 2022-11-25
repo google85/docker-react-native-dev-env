@@ -86,6 +86,13 @@
     sudo react-native run-android
     ```
 
+- in order to generate a `keystore` for release purposes, please follow the tutorial available at: @https://medium.com/geekculture/react-native-generate-apk-debug-and-release-apk-4e9981a2ea51
+    ```bash
+    # generate
+    keytool -genkey -v -keystore my-release-key.keystore -alias company_alias -keyalg RSA -keysize 2048 -validity 10000
+    # adding to project
+    mv my-release-key.keystore /android/app
+    ```
 
 
 

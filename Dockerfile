@@ -92,7 +92,6 @@ RUN mkdir -p /app/react-native-src
 # [added] fix permissions for WSL user access (& implicit node?!) to .npm & others
 # npm
 RUN chown -R $USER_ID:$GROUP_ID "/root/.npm"
-RUN chown -R $USER_ID:$GROUP_ID "/root/.config"
 
 # global node_modules [>230 sec]
 RUN chown -R $USER_ID:$GROUP_ID "/usr/local/lib/node_modules"
@@ -101,8 +100,10 @@ RUN chown -R $USER_ID:$GROUP_ID "/usr/local/lib/node_modules"
 RUN chown -R $USER_ID:$GROUP_ID /opt/android-sdk-linux
 RUN chown -R $USER_ID:$GROUP_ID /app/react-native-src
 
+# these must be run from container
+#RUN chown -R $USER_ID:$GROUP_ID "/root/.config"
 # metro for building stage on opening via Expo mobile app
-RUN chown -R $USER_ID:$GROUP_ID "/tmp/metrocache"
+#RUN chown -R $USER_ID:$GROUP_ID "/tmp/metrocache"
 
 # make ANDROID_HOME symlink
 RUN mkdir -p /root/Android
