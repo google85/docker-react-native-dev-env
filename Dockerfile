@@ -9,7 +9,7 @@ RUN npm install -g create-react-native-app
 RUN npm install -g exp
 
 # update & upgrade
-RUN apt-get update && apt-get upgrade
+RUN apt-get --quiet update --yes && apt-get --quiet upgrade --yes
 
 # JDK - as we need jlink for gradle build APK, default-jre is not an acceptable version
 RUN apt-get -y install openjdk-11-jdk
